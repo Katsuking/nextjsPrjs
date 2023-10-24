@@ -44,7 +44,25 @@ npx create-next-app@latest my-app --typescript --tailwind --eslint
 ```
 
 - next.js prj
+
 ![Next.js choices](./images/next_choices.png)
 
 - shadcn/ui
+
 ![shadcn](./images/shadcn.png)
+
+button
+
+```sh
+npx shadcn-ui@latest add button
+```
+
+#### cn について
+
+`lib/utils.ts`に定義されているように, twMerge と clsx を使って、
+tailwind のコンフリクトが発生したときでも意図したように動作させたい。
+
+### Auth
+
+認証には [clerk](https://clerk.com/docs/quickstarts/nextjs)を使う
+( free tier で十分 )
