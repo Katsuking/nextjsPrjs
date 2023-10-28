@@ -66,3 +66,21 @@ tailwind のコンフリクトが発生したときでも意図したように�
 
 認証には [clerk](https://clerk.com/docs/quickstarts/nextjs)を使う
 ( free tier で十分 )
+
+### dark mode
+
+[setup](https://ui.shadcn.com/docs/dark-mode/next)
+
+```sh
+npm i next-themes
+npx shadcn-ui@latest add dropdown-menu
+```
+
+### DB
+
+```sh
+npm i -D prisma
+npm i -D @prisma/client # こいつを入れても良い気もする
+```
+
+after install `npx prisma init`
