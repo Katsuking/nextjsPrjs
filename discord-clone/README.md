@@ -79,8 +79,20 @@ npx shadcn-ui@latest add dropdown-menu
 ### DB
 
 ```sh
-npm i -D prisma
-npm i -D @prisma/client # こいつを入れても良い気もする
+npm i -D prisma @prisma/client
 ```
 
 after install `npx prisma init`
+
+### env
+
+```sh
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=???
+CLERK_SECRET_KEY=???
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+
+DATABASE_URL="mysql://myuser:password@localhost:3006/mydb"
+```

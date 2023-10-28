@@ -21,10 +21,10 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: discord-phpmyadmin
     depends_on:
-      - db
+      - discord-mydb
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=db
+      - PMA_HOST=discord-mydb
       - PMA_USER=myuser
       - PMA_PASSWORD=password
     ports:
