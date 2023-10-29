@@ -67,3 +67,9 @@ npx shadcn-ui@latest add input
 
 app/ ではなくて、src/なので注意
 ![vite setup options](./images/vitesetup.png)
+
+### appwrite
+
+```sh
+npm i appwrite
+```

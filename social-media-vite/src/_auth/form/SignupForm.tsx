@@ -7,7 +7,6 @@ import * as z from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,6 +16,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SignupValidation } from "@/lib/validation";
 import Loader from "@/components/ui/shared/Loader";
+import { Link } from "react-router-dom";
+import { createUserAccount } from "@/lib/appwrite/api";
 
 const SignupForm = () => {
   // TODO: status
@@ -34,10 +35,11 @@ const SignupForm = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof SignupValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: z.infer<typeof SignupValidation>) {
     console.log(values);
+    // create a user
+    const newUser = await createUserAccount(values);
+    console.log(newUser);
   }
 
   return (
@@ -116,6 +118,15 @@ const SignupForm = () => {
                 "Sign up"
               )}
             </Button>
+            <p className="text-small-regular ">
+              Already have an account?
+              <Link
+                to="/sign-in"
+                className="text-primary-500 text-sm-semibold ml-1"
+              >
+                Log in
+              </Link>
+            </p>
           </form>
         </div>
       </Form>
