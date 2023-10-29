@@ -55,6 +55,9 @@ button
 
 ```sh
 npx shadcn-ui@latest add button
+npx shadcn-ui@latest add dialog
+npx shadcn-ui@latest add input
+npx shadcn-ui@latest add form # install react hook and zod
 ```
 
 #### cn について
