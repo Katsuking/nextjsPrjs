@@ -1,6 +1,7 @@
 # social media app
 
 _Not Next.js_
+(使うレポジトリちゃうくね?)
 
 - appwrite (free tier)
 - react query ( tanstack )
@@ -35,6 +36,15 @@ const App = () => {
 };
 
 export default App;
+```
+
+- tailwindcss with vite
+
+[vite setup](https://tailwindcss.com/docs/guides/vite)
+
+```sh
+npm install -D tailwindcss postcss autoprefixer tailwindcss-animate
+npx tailwindcss init -p
 ```
 
 ### React + TypeScript + Vite
