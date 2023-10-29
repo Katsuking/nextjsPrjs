@@ -52,3 +52,18 @@ npx tailwindcss init -p
 ```sh
 npm install react-router-dom
 ```
+
+### shadcn/ui
+
+[vite](https://ui.shadcn.com/docs/installation/vite)
+
+```sh
+npm i -D @types/node
+npx shadcn-ui@latest init # 選択は下記の画像の通り
+npx shadcn-ui@latest add button
+npx shadcn-ui@latest add form
+npx shadcn-ui@latest add input
+```
+
+app/ ではなくて、src/なので注意
+![vite setup options](./images/vitesetup.png)
