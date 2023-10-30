@@ -63,6 +63,7 @@ npx shadcn-ui@latest init # 選択は下記の画像の通り
 npx shadcn-ui@latest add button
 npx shadcn-ui@latest add form
 npx shadcn-ui@latest add input
+npx shadcn-ui@latest add toast # pop-up message
 ```
 
 app/ ではなくて、src/なので注意
@@ -73,3 +74,23 @@ app/ ではなくて、src/なので注意
 ```sh
 npm i appwrite
 ```
+
+- DB: collections relationship
+
+下記はどちらも two-way relationship
+
+![relationship](/images/collection_relationship.png)
+
+- users(like) <-> posts(liked)
+
+![like](/images/like.png)
+
+- caption
+
+![caption](/images/caption.png)
+
+- index caption
+
+![caption_index](/images/caption_index.png)
+
+Users の imaageId は、profile 画像を削除するために必要

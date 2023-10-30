@@ -18,8 +18,10 @@ import { SignupValidation } from "@/lib/validation";
 import Loader from "@/components/ui/shared/Loader";
 import { Link } from "react-router-dom";
 import { createUserAccount } from "@/lib/appwrite/api";
+import { useToast } from "@/components/ui/use-toast";
 
 const SignupForm = () => {
+  const { toast } = useToast();
   // TODO: status
   const isLoading = false;
 
@@ -39,7 +41,14 @@ const SignupForm = () => {
     console.log(values);
     // create a user
     const newUser = await createUserAccount(values);
-    console.log(newUser);
+    if (!newUser)
+      // from shadcn
+      return toast({
+        title: "Sign up failed. Please try again!",
+      });
+
+    // TODO: implement this
+    const session = await singInAccount();
   }
 
   return (
