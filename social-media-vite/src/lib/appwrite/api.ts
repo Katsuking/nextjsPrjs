@@ -1,5 +1,5 @@
 import { INewUser } from "@/types";
-import { ID } from "appwrite";
+import { ID, Query } from "appwrite";
 import { account, appwriteConfig, avatars, databases } from "./config";
 
 // appwrite に新たにユーザーを作成
@@ -51,3 +51,32 @@ export const saveUserToDB = async (user: {
     console.log(error);
   }
 };
+
+export async function singInAccount(user: { email: string; password: string }) {
+  // user can login with email and password
+  try {
+    const session = account.createEmailSession(user.email, user.password); // from appwrite
+    return session;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getCurrentUser() {
+  try {
+    const currentAccount = await account.get();
+    if (!currentAccount) {
+      throw Error;
+    }
+    // dbからユーザーの取得
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.equal("accountId", currentAccount.$id)]
+    );
+    if (!currentUser) throw Error;
+    return currentUser.documents[0];
+  } catch (error) {
+    console.log(error);
+  }
+}

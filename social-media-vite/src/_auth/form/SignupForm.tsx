@@ -16,14 +16,28 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SignupValidation } from "@/lib/validation";
 import Loader from "@/components/ui/shared/Loader";
-import { Link } from "react-router-dom";
-import { createUserAccount } from "@/lib/appwrite/api";
+import { Link, useNavigate } from "react-router-dom";
+// import { createUserAccount } from "@/lib/appwrite/api"; react-queryで呼び出すので、直接はいらない
 import { useToast } from "@/components/ui/use-toast";
+import {
+  useCreateUserAccountMutation,
+  useSignInAccountMutation,
+} from "@/lib/react-query/queriesAndMutations";
+import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
   const { toast } = useToast();
-  // TODO: status
-  const isLoading = false;
+  // AuthContext
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const navigate = useNavigate();
+
+  // react query
+  // mutateAsyncをcreateUserAccountという名前に書き換え
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
+    useCreateUserAccountMutation();
+
+  const { mutateAsync: singInAccount, isPending: isSigningIn } =
+    useSignInAccountMutation();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignupValidation>>({
@@ -47,8 +61,24 @@ const SignupForm = () => {
         title: "Sign up failed. Please try again!",
       });
 
-    // TODO: implement this
-    const session = await singInAccount();
+    // use react-query mutation
+    const session = await singInAccount({
+      email: values.email,
+      password: values.password,
+    });
+
+    if (!session) {
+      return toast({ title: "Sign in failed. Please try again" });
+    }
+
+    //  store the session in react context
+    const isLoggedIn = await checkAuthUser();
+    if (isLoggedIn) {
+      form.reset();
+      navigate("/");
+    } else {
+      return toast({ title: "sign up failed. Please try again" });
+    }
   }
 
   return (
@@ -119,7 +149,7 @@ const SignupForm = () => {
               )}
             />
             <Button type="submit" className="shad-button_primary">
-              {isLoading ? (
+              {isCreatingAccount ? (
                 <div className="gap-2 flex-center ">
                   <Loader /> Loding...
                 </div>

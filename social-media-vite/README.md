@@ -9,6 +9,20 @@ _Not Next.js_
 - tailwindcss
 - react router with outlet
 
+## .env.local
+
+check appwrite!
+
+```sh
+VITE_APPWRITE_URL=''
+VITE_APPWRITE_PROJECT_ID=''
+VITE_APPWRITE_STORAGE_ID=''
+VITE_APPWRITE_DATABASE_ID=''
+VITE_APPWRITE_SAVES_COLLECTION_ID=''
+VITE_APPWRITE_POST_COLLECTION_ID=''
+VITE_APPWRITE_USER_COLLECTION_ID=''
+```
+
 ## vite setup
 
 ```sh
@@ -94,3 +108,12 @@ npm i appwrite
 ![caption_index](/images/caption_index.png)
 
 Users の imaageId は、profile 画像を削除するために必要
+
+### react query
+
+メイントピック
+Not only simplify fetching but also caching, infinite scroll and more...
+
+```sh
+npm i @tanstack/react-query
+```
