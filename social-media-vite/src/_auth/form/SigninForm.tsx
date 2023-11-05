@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SigninValidation, SignupValidation } from "@/lib/validation";
+import { SigninValidation } from "@/lib/validation";
 import Loader from "@/components/ui/shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
 // import { createUserAccount } from "@/lib/appwrite/api"; react-queryで呼び出すので、直接はいらない
@@ -28,8 +28,7 @@ const SigninForm = () => {
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
   const navigate = useNavigate();
 
-  const { mutateAsync: singInAccount, isPending: isSigningIn } =
-    useSignInAccountMutation();
+  const { mutateAsync: singInAccount } = useSignInAccountMutation();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof SigninValidation>>({

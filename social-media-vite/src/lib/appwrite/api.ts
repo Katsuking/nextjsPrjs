@@ -55,7 +55,16 @@ export const saveUserToDB = async (user: {
 export async function singInAccount(user: { email: string; password: string }) {
   // user can login with email and password
   try {
-    const session = account.createEmailSession(user.email, user.password); // from appwrite
+    const session = await account.createEmailSession(user.email, user.password); // from appwrite
+    return session;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function singOutAccount() {
+  try {
+    const session = await account.deleteSession("current"); // from appwrite
     return session;
   } catch (error) {
     console.log(error);
