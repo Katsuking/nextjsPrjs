@@ -78,6 +78,7 @@ npx shadcn-ui@latest add button
 npx shadcn-ui@latest add form
 npx shadcn-ui@latest add input
 npx shadcn-ui@latest add toast # pop-up message
+npx shadcn-ui@latest add textarea
 ```
 
 app/ ではなくて、src/なので注意
@@ -116,4 +117,12 @@ Not only simplify fetching but also caching, infinite scroll and more...
 
 ```sh
 npm i @tanstack/react-query
+```
+
+### file upload
+
+[react-dropzone usage](https://www.npmjs.com/package/react-dropzone#usage)
+
+```sh
+npm i react-dropzone
 ```
