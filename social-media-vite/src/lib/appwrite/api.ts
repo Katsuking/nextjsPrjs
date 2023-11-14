@@ -84,7 +84,7 @@ export async function getCurrentUser() {
       [Query.equal("accountId", currentAccount.$id)]
     );
     if (!currentUser) throw Error;
-    console.log("currentUser.documents[0]: ", currentUser.documents[0]);
+    // console.log("currentUser.documents[0]: ", currentUser.documents[0]);
     return currentUser.documents[0];
   } catch (error) {
     console.log(error);
@@ -94,7 +94,7 @@ export async function getCurrentUser() {
 export async function createPost(post: INewPost) {
   try {
     // upload a file to appwrite storage
-    const uploadedFile = await uploadFile(post.file[0]);
+    const uploadedFile = await uploadFile(post.file[0]); // first post
     if (!uploadFile) throw Error;
 
     // get a file url
@@ -133,7 +133,7 @@ export async function createPost(post: INewPost) {
   }
 }
 
-// UPLOAD FILE
+// UPLOAD FILE to storage
 export async function uploadFile(file: File) {
   try {
     const uploadedFile = await storage.createFile(
@@ -170,6 +170,73 @@ export async function deleteFile(fileId: string) {
   try {
     await storage.deleteFile(appwriteConfig.storageId, fileId);
 
+    return { status: "ok" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// home
+export async function getRecentPosts() {
+  const posts = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.postCollectionId,
+    [Query.orderDesc("$createdAt"), Query.limit(20)]
+  );
+
+  if (!posts) throw Error;
+
+  return posts;
+}
+
+export async function likePost(postId: string, likesArray: string[]) {
+  // save の仕組みとほとんど同じ
+  try {
+    // likeのarrayを上書きする
+    const updatedPost = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      postId,
+      {
+        likes: likesArray,
+      }
+    );
+    if (!updatedPost) throw Error;
+    return updatedPost;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function savePost(postId: string, userId: string) {
+  // like の仕組みとほとんど同じ
+  try {
+    // likeのarrayを上書きする
+    const updatedPost = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.savesCollectionId,
+      ID.unique(), // create new id
+      {
+        // check appwrite saves attributes
+        user: userId,
+        post: postId,
+      }
+    );
+    if (!updatedPost) throw Error;
+    return updatedPost;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteSavedPost(savedRecordId: string) {
+  try {
+    const statusCode = await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.savesCollectionId,
+      savedRecordId
+    );
+    if (!statusCode) throw Error;
     return { status: "ok" };
   } catch (error) {
     console.log(error);

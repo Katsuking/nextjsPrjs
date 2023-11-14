@@ -1,3 +1,6 @@
+// tanstack react queryで使うキーを定義
+// 補完機能を使ってタイポをなくす
+
 export enum QUERY_KEYS {
   // AUTH KEYS
   CREATE_USER_ACCOUNT = "createUserAccount",

@@ -10,7 +10,7 @@ type FileUploaderProps = {
 };
 
 // rafce
-const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
+const FileUploader = ({ fieldchange, mediaUrl }: FileUploaderProps) => {
   const [fileUrl, setFileUrl] = useState("");
   const [file, setFile] = useState<File[]>([]); // file itself
 
@@ -18,7 +18,7 @@ const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
       setFile(acceptedFiles);
-      fieldChange(acceptedFiles);
+      fieldchange(acceptedFiles);
       setFileUrl(URL.createObjectURL(acceptedFiles[0]));
     },
     [file]

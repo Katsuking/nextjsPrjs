@@ -115,6 +115,15 @@ Users の imaageId は、profile 画像を削除するために必要
 メイントピック
 Not only simplify fetching but also caching, infinite scroll and more...
 
+[useQuery と useMutation の違い](https://stackoverflow.com/questions/64700944/react-query-whats-the-difference-between-usequery-and-usemutation-hook)
+
+参考)
+どれだけ便利か理解する
+
+- [サンプルを通してみる query key の重要性と便利さ](https://tkdodo.eu/blog/practical-react-query#treat-the-query-key-like-a-dependency-array)
+
+- [initial query data](https://tanstack.com/query/latest/docs/react/guides/initial-query-data#initial-data-from-cache)
+
 ```sh
 npm i @tanstack/react-query
 ```
