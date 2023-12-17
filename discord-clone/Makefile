@@ -17,6 +17,7 @@ up: ${COMPOSE} down
 .PHONY: down
 down: ${COMPOSE}
 	docker compose down >/dev/null 2>&1
+	docker ps
 
 .PHONY: build
 build: ${COMPOSE} down
