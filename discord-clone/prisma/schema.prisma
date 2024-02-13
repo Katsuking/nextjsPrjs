@@ -30,7 +30,7 @@ model Server {
   id String @id @default(uuid())
   name String
   imageUrl String @db.Text
-  iviteCode String @db.Text
+  inviteCode String @db.Text
 
   profileId String
   profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
@@ -39,7 +39,7 @@ model Server {
   updatedAt DateTime @updatedAt
 
   members Member[]
-  channel Channel[]
+  channels Channel[]
 
   @@index([profileId])
 }
@@ -58,6 +58,7 @@ model Member {
   // 当然, profile情報を持つ
   profileId String
   profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
 
   // どのserverに属しているかの情報を持つ
   serverId String

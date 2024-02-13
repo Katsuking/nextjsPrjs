@@ -1,9 +1,8 @@
 "use client";
 
-import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { FormSchema } from "@/schemas";
 import {
   Dialog,
   DialogContent,
@@ -22,24 +21,23 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+import { server } from "@/actions/server";
 
 export const InitialModal = () => {
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
+  const [isPending, startTransition] = useTransition();
+
   // for hydration error
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // validation with zod
-  const formSchema = z.object({
-    name: z.string().min(1, { message: "Server name is required" }),
-    imageUrl: z.string().min(1, { message: "Server image is required" }),
-  });
-
   // comes with "npx shadcn-ui@latest add form"
   const form = useForm({
-    resolver: zodResolver(formSchema), // 上で定義したvalidationを使う
+    resolver: zodResolver(FormSchema), // 上で定義したvalidationを使う
     defaultValues: {
       name: "",
       imageUrl: "",
@@ -47,10 +45,24 @@ export const InitialModal = () => {
   });
 
   // extract a loading state
-  const isLoading = form.formState.isSubmitting;
+  // const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: Zod.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: Zod.infer<typeof FormSchema>) => {
+    startTransition(() => {
+      server(values)
+        .then((data) => {
+          if (data.error) {
+            setError(data.error);
+          }
+
+          if (data.success) {
+            setSuccess(data.success);
+          }
+        })
+        .catch(() => {
+          setError("Something went wrong!");
+        });
+    });
   };
 
   // for hydration error
@@ -87,7 +99,7 @@ export const InitialModal = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          disabled={isLoading}
+                          disabled={isPending}
                           className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                           placeholder="Enter server name"
                           // from react hook form
@@ -100,7 +112,7 @@ export const InitialModal = () => {
                 />
               </div>
               <DialogFooter className="bg-gray-100 px-6 py-4">
-                <Button variant="primary" disabled={isLoading}>
+                <Button variant="primary" disabled={isPending}>
                   Create
                 </Button>
               </DialogFooter>
